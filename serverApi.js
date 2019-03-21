@@ -1,5 +1,6 @@
 const request = require('request');
 const Enum = require('./Enum.js');
+const User = require('./user.js');
 
 //갬블을 생성합니다. 
 //gambleKind - 갬블의 종류
@@ -155,9 +156,15 @@ module.exports.createGambleLog = function(gambleId, kind, user, activityKind, va
 
 //유저의 정보를 가져옵니다
 //userId - 가지고 오고자 하는 유저의 ID
-module.exports.getUser = function(userId){
-    request('http://flowernoisy.dothome.co.kr/UserApi/user?userId=' + userId, function(error, response, body) {  
-        console.log(body);
+module.exports.getUser = async function(userId){
+    return new Promise(function(resolve, reject){
+        request('http://flowernoisy.dothome.co.kr/UserApi/user?userId=' + userId, function(error, response, body) {  
+            if(error) return reject(error);
+            try{
+                resolve(JSON.parse(body));
+            }catch(e){
+            }
+        });
     });
 }
 
