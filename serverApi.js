@@ -8,11 +8,12 @@ const User = require('./user.js');
 //user2 - 갬블 하는 유저2
 //isVoteGamble - 백화요란전 여부 1:yes 0:no
 module.exports.createGamble = function(gambleKind, user1, user2, isVoteGamble){
+    return new Promise(function(resolve, reject){
     request.post({
         url:     'http://flowernoisy.dothome.co.kr/GambleApi/gamble',
         form:    { "kind": gambleKind, "user1":user1, "user2":user2, "isVoteGamble":isVoteGamble }
         }, function(error, response, body){
-            if (error) throw new Error(error);
+            if (error) throw new reject(error);
     
             //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
             if(response.statusCode == 400){
@@ -28,12 +29,14 @@ module.exports.createGamble = function(gambleKind, user1, user2, isVoteGamble){
             //정상 201- created
             if(response.statusCode == 201){
                 console.log(body);
+                resolve(JSON.parse(body));
                 return;
             }
     
             //그 외 이상한 애들
             console.log(body);
         });
+    });
 };
 
 //갬블 종료시 업데이트 합니다.
@@ -126,32 +129,32 @@ module.exports.updateChip = function(_from, _to, _chipCount){
 //activityKind - 갬블 행위 종류
 //value - 행위의 값 (친치로:주사위, ESP게임:카드 등)
 module.exports.createGambleLog = function(gambleId, kind, user, activityKind, value){
-    request.post({
-    url:     'http://flowernoisy.dothome.co.kr/GambleApi/gambleLog',
-    form:    { "gambleId" : gambleId, "kind": kind, "user":user, "activityKind":activityKind, "value":value }
-    }, function(error, response, body){
-        if (error) throw new Error(error);
+        request.post({
+        url:     'http://flowernoisy.dothome.co.kr/GambleApi/gambleLog',
+        form:    { "gambleId" : gambleId, "kind": kind, "user":user, "activityKind":activityKind, "value":value }
+        }, function(error, response, body){
+            if (error) throw new Error(error);
 
-        //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
-        if(response.statusCode == 400){
-            const info = JSON.parse(body);
-            console.log(info);
-            return;
-        }
-        //심각한 일이 일어남;
-        if(response.statusCode == 500){
-            console.log(body);
-            return;
-        }
-        //정상 201- created
-        if(response.statusCode == 201){
-            console.log(body);
-            return;
-        }
+            //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
+            if(response.statusCode == 400){
+                const info = JSON.parse(body);
+                console.log(info);
+                return;
+            }
+            //심각한 일이 일어남;
+            if(response.statusCode == 500){
+                console.log(body);
+                return;
+            }
+            //정상 201- created
+            if(response.statusCode == 201){
+                console.log(body);
+                return;
+            }
 
-        //그 외 이상한 애들
-        console.log(body);
-    });
+            //그 외 이상한 애들
+            console.log(body);
+        });
 };
 
 //유저의 정보를 가져옵니다

@@ -15,7 +15,7 @@ async function chinchiroMain(){
     var user2Id = "tester";
     var isVoteGamble = 1;
 
-    //await ChinchiroDice.startChinchiro(user1Id, user2Id, isVoteGamble);
+    //var gamble =await ChinchiroDice.startChinchiro(user1Id, user2Id, isVoteGamble);
     //await ChinchiroDice.betChinchiro(16, user1Id, 3);
     //await ChinchiroDice.betChinchiro(16, user2Id, 5);
     //await ChinchiroDice.doCheatDiceChinchiro(user1Id, 16);
@@ -23,7 +23,7 @@ async function chinchiroMain(){
     // var winner = await ChinchiroDice.getWinner(16, user1Id, user2Id);
     //await ChinchiroDice.finishChinchiro(16, user1Id);
 
-    //await ESP.startESP(user1Id, user2Id, isVoteGamble);
+    //var gamble = await ESP.startESP(user1Id, user2Id, isVoteGamble);
     //await ESP.setDealerCard(20);
     //await ESP.betChip(20, user1Id, 3);
     //await ESP.betChip(20, user2Id, 5);

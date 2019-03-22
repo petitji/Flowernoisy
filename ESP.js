@@ -26,7 +26,7 @@ async function getDealerPastCard(gambleId, userId){
 }
 
 module.exports.startESP = async function (user1Id, user2Id, isVoteGamble){
-    await ServerAPI.createGamble(Enum.GambleKind.ESP, user1Id, user2Id, isVoteGamble);
+    return await ServerAPI.createGamble(Enum.GambleKind.ESP, user1Id, user2Id, isVoteGamble);
 }
 
 module.exports.setDealerCard = async function(gambleId){

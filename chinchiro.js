@@ -120,7 +120,7 @@ async function getPastDice (gambleId, userId){
 }
 
 module.exports.startChinchiro = async function (user1Id, user2Id, isVoteGamble){
-    await ServerAPI.createGamble(Enum.GambleKind.Chinchiro, user1Id, user2Id, isVoteGamble);
+    return await ServerAPI.createGamble(Enum.GambleKind.Chinchiro, user1Id, user2Id, isVoteGamble);
 }
 
 module.exports.betChinchiro = async function (gambleId, userId, chipCount){
