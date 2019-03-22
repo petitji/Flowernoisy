@@ -3,7 +3,7 @@ var ServerAPI = require('./serverApi.js');
 var Utils = require('./Utils.js');
 const Enum = require('./Enum.js');
 
-class ChinchiroDice{
+class Dice{
     constructor (item1, item2, item3){
         this.item1 = item1;
         this.item2 = item2;
@@ -21,20 +21,20 @@ class ChinchiroDice{
 
     rank (){
         //핀조로
-        if(this.equals(new ChinchiroDice(1,1,1))){
+        if(this.equals(new Dice(1,1,1))){
             return 6;
         }
         //아라시
-        else if(this.equals(new ChinchiroDice(2,2,2)) || this.equals(new ChinchiroDice(3,3,3)) ||
-        this.equals(new ChinchiroDice(4,4,4)) || this.equals(new ChinchiroDice(5,5,5)) || this.equals(new ChinchiroDice(6,6,6))){
+        else if(this.equals(new Dice(2,2,2)) || this.equals(new Dice(3,3,3)) ||
+        this.equals(new Dice(4,4,4)) || this.equals(new Dice(5,5,5)) || this.equals(new Dice(6,6,6))){
             return 5;
         }
         //시고로
-        else if(this.equals(new ChinchiroDice(4,5,6))){
+        else if(this.equals(new Dice(4,5,6))){
             return 4;
         }
         //히후미
-        else if(this.equals(new ChinchiroDice(1,2,3))){
+        else if(this.equals(new Dice(1,2,3))){
             return 0;
         }
         //눈있음
@@ -49,21 +49,21 @@ class ChinchiroDice{
     }
 }
 
-module.exports = ChinchiroDice;
+module.exports = Dice;
 
 
 LuckyDices = [
-    new ChinchiroDice(4,5,6),
-    new ChinchiroDice(1,1,1),
-    new ChinchiroDice(2,2,2),
-    new ChinchiroDice(3,3,3),
-    new ChinchiroDice(4,4,4),
-    new ChinchiroDice(5,5,5),
-    new ChinchiroDice(6,6,6),
+    new Dice(4,5,6),
+    new Dice(1,1,1),
+    new Dice(2,2,2),
+    new Dice(3,3,3),
+    new Dice(4,4,4),
+    new Dice(5,5,5),
+    new Dice(6,6,6),
 ];
 
 function NormalDice() {
-    return new ChinchiroDice(Utils.getRandomInt(1,6), Utils.getRandomInt(1,6), Utils.getRandomInt(1,6));
+    return new Dice(Utils.getRandomInt(1,6), Utils.getRandomInt(1,6), Utils.getRandomInt(1,6));
 }
 
 function LuckyDice(){
@@ -71,7 +71,7 @@ function LuckyDice(){
 }
 
 function CheatDice(){
-    return new ChinchiroDice(1,1,1);
+    return new Dice(1,1,1);
 }
 
 async function getCheatDice(userId){
@@ -108,11 +108,15 @@ async function getRandomDice(userId){
     return NormalDice();
 }
 
+async function convertToChinchiro (data){
+    var parsed = JSON.parse(data);
+    return new Dice(parsed.item1, parsed.item2, parsed.item3);
+}
+
    
-async function getPastDice(gambleId, userId){
-    var dice1 = await ServerAPI.GetGambleLog(gambleId, Enum.GambleKind.Chinchiro, user1);
-    var parsed = JSON.parse(dice1);
-    return await Utils.convertToChinchiro(parsed);
+async function getPastDice (gambleId, userId){
+    let dice = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll);
+    return await convertToChinchiro(dice);
 }
 
 module.exports.startChinchiro = async function (user1Id, user2Id, isVoteGamble){

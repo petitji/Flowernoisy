@@ -207,3 +207,16 @@ module.exports.updateCheatCount = function(_userId, _gambleId){
         console.log(body);
     });
 }
+
+module.exports.getGambleLog = async function(gambleId, gambleKind, userId, activityKind){
+    return new Promise(function(resolve, reject){
+        request('http://flowernoisy.dothome.co.kr/GambleApi/gambleLog?gambleId=' + gambleId + '&gambleKind=' + gambleKind + '&userId=' + userId + "&activityKind=" + activityKind,
+        function(error, response, body) {  
+            if(error) return reject(error);
+            try{
+                resolve(JSON.parse(body));
+            }catch(e){
+            }
+        });
+    });
+}

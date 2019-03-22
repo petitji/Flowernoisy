@@ -20,7 +20,7 @@ async function chinchiroMain(){
     //await ChinchiroDice.betChinchiro(16, user2Id, 5);
     //await ChinchiroDice.doCheatDiceChinchiro(user1Id, 16);
     //await ChinchiroDice.doDiceChinchiro(user2Id, 16);
-    //var winner = await ChinchiroDice.getWinner(16, user1Id, user2Id);
+    // var winner = await ChinchiroDice.getWinner(16, user1Id, user2Id);
     //await ChinchiroDice.finishChinchiro(16, user1Id);
 
     //await ESP.startESP(user1Id, user2Id, isVoteGamble);
