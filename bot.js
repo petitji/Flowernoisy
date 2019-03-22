@@ -1,60 +1,40 @@
 
-const Enum = require('./Enum.js');
-const ServerAPI = require('./serverApi.js');
 var ChinchiroDice = require('./chinchiro.js');
-var User = require('./user.js');
+var ESP = require('./ESP.js');
+var MinusOne = require('./MinusOne.js');
 
 //모든 boolean 값들은 1을 true로 합니다.
 //is 등으로 시작하는 변수들
 
 //아래 함수의 주석을 풀고 테스트하셔요~!
 
-//ServerAPI.createGamble(Enum.GambleKind.Chinchiro, "developer", "tester", 1);
-//ServerAPI.updateGamble(11, Enum.GambleKind.Chinchiro, "developer");
-//ServerAPI.updateChip("developer", "tester", 2);
-//ServerAPI.createGambleLog(11, Enum.GambleKind.Chinchiro, "developer", Enum.ChinchiroActivity.DiceRoll, "6,6,6");
-//ServerAPI.getUser("developer");
-//ServerAPI.updateCheatCount("developer", 11);
+chinchiroMain();
 
-
-main();
-
-async function main(){
+async function chinchiroMain(){
     var user1Id = "developer";
     var user2Id = "tester";
     var isVoteGamble = 1;
 
-    await StartChinchiro(user1Id, user2Id, isVoteGamble);
-    //속임수를 쓸 경우
-    if(true){
+    //await ChinchiroDice.startChinchiro(user1Id, user2Id, isVoteGamble);
+    //await ChinchiroDice.betChinchiro(16, user1Id, 3);
+    //await ChinchiroDice.betChinchiro(16, user2Id, 5);
+    //await ChinchiroDice.doCheatDiceChinchiro(user1Id, 16);
+    //await ChinchiroDice.doDiceChinchiro(user2Id, 16);
+    //var winner = await ChinchiroDice.getWinner(16, user1Id, user2Id);
+    //await ChinchiroDice.finishChinchiro(16, user1Id);
 
-    }
+    //await ESP.startESP(user1Id, user2Id, isVoteGamble);
+    //await ESP.setDealerCard(17);
+    //await ESP.betChip(17, user1Id, 3);
+    //await ESP.betChip(17, user2Id, 5);
+    //await ESP.cheat(17, user1Id);
+    //await ESP.submitUserCard(17, user1Id, "A,B,C,D,E");
+    //await ESP.submitUserCard(17, user2Id, "C,B,A,E,D");
+    //var winner = await ESP.getWinner(16, user1Id, user2Id);
+    //await ESP.finishESP(gambleId, winner);
+
+    //await MinusOne.startMinusOne(user1Id, user2Id, isVoteGamble); 19
+    
 }
 
-// async function playChinchiro(user1Id, user2Id){
-    
-//     //속임수를 쓰는 경우
-//     var user1Dice = await ChinchiroDice.getCheatDice(user1Id);
-//     //속임수를 안 쓰는 경우
-//     var user2Dice = await ChinchiroDice.getDice(user2Id);
 
-//     var winner = "";
-//     if(user1Dice.rank() > user2Dice.rank()){
-//         winner = user1Id;
-//     }
-
- 
-// }
-
-// async function StartChinchiro(user1Id, user2Id, isVoteGamble){
-//     ServerAPI.createGamble(Enum.GambleKind.Chinchiro, user1Id, user2Id, isVoteGamble);
-
-// }
-// async function playChinchiroCheat(userId, gambleId){
-//     ServerAPI.updateCheatCount(userId, gambleId);
-// }
-
-
- 
-
-//var user2 = new User("tester", "테스터", 25, 25, 25, 25);
