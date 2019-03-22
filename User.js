@@ -23,3 +23,7 @@ class User{
 
 
 module.exports = User;
+
+module.exports.convertToUser = async function (data){
+    return await new User(data.id, data.name, data.intelligence, data.luck, data.acting, data.chip);
+}

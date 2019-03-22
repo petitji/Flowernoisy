@@ -2,6 +2,7 @@
 var ServerAPI = require('./serverApi.js');
 var Utils = require('./Utils.js');
 const Enum = require('./Enum.js');
+var User = require('./User.js');
 
 class Dice{
     constructor (item1, item2, item3){
@@ -76,7 +77,7 @@ function CheatDice(){
 
 async function getCheatDice(userId){
     let serverUser1=  await ServerAPI.getUser(userId);
-    var user =  await Utils.convertToUser(serverUser1);
+    var user =  await User.convertToUser(serverUser1);
     var userCheat = await user.calculateCheat();
 
     let luckNow = Utils.getRandomInt(1,100);
@@ -93,7 +94,7 @@ async function getCheatDice(userId){
    
 async function getRandomDice(userId){
     let serverUser1=  await ServerAPI.getUser(userId);
-    var user =  await Utils.convertToUser(serverUser1);
+    var user =  await User.convertToUser(serverUser1);
     var userLuck = await user.calculateLucky();
 
     let luckNow = Utils.getRandomInt(1,100);

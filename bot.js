@@ -28,6 +28,8 @@ async function chinchiroMain(){
     //await ESP.betChip(20, user1Id, 3);
     //await ESP.betChip(20, user2Id, 5);
     //var dealerCard = await ESP.cheat(20, user1Id);
+    var luckyCard =  ESP.lucky(20, user1Id);
+    console.log(luckyCard);
     //await ESP.submitUserCard(20, user1Id, "B,A,C,D,E");
     //await ESP.submitUserCard(20, user2Id, "C,B,A,E,D");
     //var winner = await ESP.getWinner(20, user1Id, user2Id);
