@@ -33,7 +33,7 @@ async function chinchiroMain(){
     //var winner = await ESP.getWinner(20, user1Id, user2Id);
     //await ESP.finishESP(20, user1Id);
 
-    //await MinusOne.startMinusOne(user1Id, user2Id, isVoteGamble); 19
+    //var gamble = await MinusOne.startMinusOne(user1Id, user2Id, isVoteGamble); 19
     
 }
 
