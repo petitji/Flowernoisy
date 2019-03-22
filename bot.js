@@ -24,14 +24,14 @@ async function chinchiroMain(){
     //await ChinchiroDice.finishChinchiro(16, user1Id);
 
     //await ESP.startESP(user1Id, user2Id, isVoteGamble);
-    //await ESP.setDealerCard(17);
-    //await ESP.betChip(17, user1Id, 3);
-    //await ESP.betChip(17, user2Id, 5);
-    //await ESP.cheat(17, user1Id);
-    //await ESP.submitUserCard(17, user1Id, "A,B,C,D,E");
-    //await ESP.submitUserCard(17, user2Id, "C,B,A,E,D");
-    //var winner = await ESP.getWinner(16, user1Id, user2Id);
-    //await ESP.finishESP(gambleId, winner);
+    //await ESP.setDealerCard(20);
+    //await ESP.betChip(20, user1Id, 3);
+    //await ESP.betChip(20, user2Id, 5);
+    //var dealerCard = await ESP.cheat(20, user1Id);
+    //await ESP.submitUserCard(20, user1Id, "B,A,C,D,E");
+    //await ESP.submitUserCard(20, user2Id, "C,B,A,E,D");
+    //var winner = await ESP.getWinner(20, user1Id, user2Id);
+    //await ESP.finishESP(20, user1Id);
 
     //await MinusOne.startMinusOne(user1Id, user2Id, isVoteGamble); 19
     

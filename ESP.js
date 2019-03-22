@@ -16,8 +16,13 @@ function rank(card1, card2){
 }
 
 async function getPastCard(gambleId, userId){
-    var card = await ServerAPI.GetGambleLog(gambleId, Enum.GambleKind.ESP, userId);
-    return Utils.ToArray(card);
+    var card = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.PlayerCardSet);
+    return Utils.toArray(card);
+}
+
+async function getDealerPastCard(gambleId, userId){
+    var card = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.DealerCardSet);
+    return Utils.toArray(card);
 }
 
 module.exports.startESP = async function (user1Id, user2Id, isVoteGamble){
@@ -38,13 +43,13 @@ module.exports.submitUserCard = async function(gambleId, userId, userCard){
 }
 
 module.exports.cheat = async function(gambleId, userId){
-    var dealerCard = await getPastCard(gambleId, "0");
+    var dealerCard = await getDealerPastCard(gambleId, "0");
     await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.Cheat, "");
-    return dealerCard;
+    return dealerCard.toString();
 }
 
 module.exports.getWinner = async function(gambleId, user1, user2){
-    var dealerCard = await getPastCard(gambleId, "0");
+    var dealerCard = await getDealerPastCard(gambleId, "0");
     var card1 = await getPastCard(gambleId, user1);
     var card2 = await getPastCard(gambleId, user2);
 
