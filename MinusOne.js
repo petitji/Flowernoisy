@@ -51,6 +51,12 @@ function LuckCards(){
     return cardsArray[randomNum];
 }
 
+async function isUserCheated(userId){
+    var isCheated = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.MinusOne, userId, Enum.MinusOneActivity.Cheat);
+    console.log(isCheated);
+    return isCheated;
+}
+
 async function getCheatCard(gambleId, userId){ 
     let serverUser1=  await ServerAPI.getUser(userId);
     var user =  await User.convertToUser(serverUser1);
@@ -63,7 +69,7 @@ async function getCheatCard(gambleId, userId){
         console.log(userId + "은 속임수에 성공했다!");
         
         var cards = CheatCards();
-        await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, userId, Enum.MinusOneActivity.Cheat, "");
+        await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, userId, Enum.MinusOneActivity.Cheat, 1);
         return cards;
     }
     
@@ -96,8 +102,18 @@ module.exports.betChip = async function(gambleId, userId, chipCount){
     await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, userId, Enum.ESPActivity.BetChip, chipCount);
 }   
 
-module.exports.cheat = async function (gambleId, userId){
-    return await getCheatCard(gambleId, userId);
+module.exports.cheat = async function (gambleId, me, opponent){
+    if(isUserCheated(opponent)){
+        
+    }
+    var statusCode = await ServerAPI.updateCheatCount(userId, gambleId);
+    if(statusCode != 204){
+        return;
+    }
+
+    var card = await getCheatCard(gambleId, userId);
+    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, userId, Enum.MinusOneActivity.GivePlayerCard, card);
+    return 
 }
 
 module.exports.cards = async function(gambleId, userId){

@@ -75,7 +75,7 @@ function CheatDice(){
     return new Dice(1,1,1);
 }
 
-async function getCheatDice(userId, gambleId){
+async function isCheatSuccessful(userId, gambleId){
     let serverUser1=  await ServerAPI.getUser(userId);
     var user =  await User.convertToUser(serverUser1);
     var userCheat = await user.calculateCheat();
@@ -86,15 +86,15 @@ async function getCheatDice(userId, gambleId){
     if(luckNow < userCheat){
         console.log(userId + "은 속임수에 성공했다!");
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.Cheat, 1);
-        return CheatDice();
+        return;
     }
     
     console.log(userId + "은 속임수에 실패했다.");
     await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.Cheat, 0);
-    return NormalDice();
+    return;
 }
    
-async function getRandomDice(userId, gambleId){
+async function getDice(userId){
     let serverUser1=  await ServerAPI.getUser(userId);
     var user =  await User.convertToUser(serverUser1);
     var userLuck = await user.calculateLucky();
@@ -116,10 +116,15 @@ async function convertToChinchiro (data){
     return new Dice(parsed.item1, parsed.item2, parsed.item3);
 }
 
-   
+
 async function getPastDice (gambleId, userId){
     let dice = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll);
     return await convertToChinchiro(dice);
+}
+
+async function checkIfCheated(userId, gambleId){
+    let isCheatSuccessful = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.Cheat);
+    return isCheatSuccessful == 1;
 }
 
 module.exports.startChinchiro = async function (user1Id, user2Id, isVoteGamble){
@@ -130,21 +135,34 @@ module.exports.betChinchiro = async function (gambleId, userId, chipCount){
     await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.BetChip, chipCount);
 }
 
-module.exports.doCheatDiceChinchiro = async function(userId, gambleId){
+module.exports.cheat = async function(userId, gambleId){
     var statusCode = await ServerAPI.updateCheatCount(userId, gambleId);
     if(statusCode != 204){
         console.log("속임수 횟수가 없다.");
         return;
     }
-    var dice = await getCheatDice(userId, gambleId);
-    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll, JSON.stringify(dice));
-    return dice;
+    return await isCheatSuccessful(userId, gambleId);
 }
 
 module.exports.doDiceChinchiro = async function (userId, gambleId){
     var dice = await getRandomDice(userId, gambleId);
     await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll, JSON.stringify(dice));
     return dice;
+}
+
+module.exports.rollDice = async function (userId, gambleId){
+    var isCheated  = await checkIfCheated(userId, gambleId);
+
+    //속임수가 있으면 속임수를 리턴
+    if(isCheated){
+        var dice = CheatDice();
+        await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll, JSON.stringify(dice));
+        return dice;
+    }else{
+        var dice = await getDice(userId);
+        await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll, JSON.stringify(dice));
+        return dice;
+    }
 }
 
 module.exports.getWinner = async function (gambleId, user1, user2){

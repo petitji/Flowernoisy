@@ -18,12 +18,12 @@ function rank(card1, card2){
 }
 
 async function getPastCard(gambleId, userId){
-    var card = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.PlayerCardSet);
+    var card = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.SubmitPlayerCard);
     return Utils.toArray(card);
 }
 
 async function getDealerPastCard(gambleId, userId){
-    var card = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.DealerCardSet);
+    var card = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.ESP, "dealer", Enum.ESPActivity.DealerCardSet);
     return Utils.toArray(card);
 }
 
@@ -89,7 +89,7 @@ module.exports.startESP = async function (user1Id, user2Id, isVoteGamble){
 
 module.exports.setDealerCard = async function(gambleId){
     var dealerCard = Utils.shuffle(cardArray);
-    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.ESP, "0", Enum.ESPActivity.DealerCardSet, dealerCard.toString());
+    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.ESP, "dealer", Enum.ESPActivity.DealerCardSet, dealerCard.toString());
 }
 
 module.exports.betChip = async function(gambleId, userId, chipCount){
@@ -124,10 +124,13 @@ module.exports.getWinner = async function(gambleId, user1, user2){
     var card2Rank = rank(dealerCard, card2);
 
     if(card1Rank > card2Rank){
+        console.log(user1 + "이 승리했다.");
         return user1;
     }else if(card2Rank > card1Rank){
+        console.log(user2 + "이 승리했다.");
         return user2;
     }else{
+        console.log("비겼다.");
         return "0";
     }
 }
