@@ -217,7 +217,10 @@ module.exports.getGambleLog = async function(gambleId, gambleKind, userId, activ
         function(error, response, body) {  
             if(error) return reject(error);
             try{
-                resolve(JSON.parse(body));
+                if(response.statusCode==404){
+                    return resolve(false);   
+                }
+                return resolve(JSON.parse(body));
             }catch(e){
             }
         });

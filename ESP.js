@@ -41,6 +41,44 @@ async function partDealerDice(dealerCard){
     return newArray.toString();
 }
 
+async function getCheatCard(gambleId, userId){
+    let serverUser1=  await ServerAPI.getUser(userId);
+    var user =  await User.convertToUser(serverUser1);
+    var userCheat = await user.calculateCheat();
+
+    let luckNow = Utils.getRandomInt(1,100);
+    console.log(userId+ "의 현재운/속임수성공 확률 : " + luckNow  + "/" + userCheat);
+    
+    if(luckNow < userCheat){
+        console.log(userId + "은 속임수에 성공했다!");
+        
+        var dealerCard = await getDealerPastCard(gambleId, "0");
+        await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.Cheat, "");
+        return dealerCard.toString();
+    }
+    
+    console.log(userId + "은 속임수에 실패했다.");
+    return Utils.shuffle(cardArray).toString();
+}
+
+async function getLuckyCard(gambleId, userId){
+    let serverUser1=  await ServerAPI.getUser(userId);
+    var user =  await User.convertToUser(serverUser1);
+    var userLuck = await user.calculateLucky();
+
+    let luckNow = Utils.getRandomInt(1,100);
+    console.log(userId+ "의 현재운/운좋을 확률 : " + luckNow  + "/" + userLuck);
+    
+    if(luckNow < userLuck){
+        console.log(userId + "은 운이 좋았다!");
+        var dealerCard = await getDealerPastCard(gambleId, "0");
+        return await partDealerDice(dealerCard);
+    }
+    
+    console.log(userId + "은 운이 좋지 않았다.");
+    return Utils.shuffle(cardArray).toString();
+}
+
 module.exports.startESP = async function (user1Id, user2Id, isVoteGamble){
     return await ServerAPI.createGamble(Enum.GambleKind.ESP, user1Id, user2Id, isVoteGamble);
 }
@@ -59,41 +97,18 @@ module.exports.submitUserCard = async function(gambleId, userId, userCard){
 }
 
 module.exports.cheat = async function(gambleId, userId){
-    let serverUser1=  await ServerAPI.getUser(userId);
-    var user =  await User.convertToUser(serverUser1);
-    var userCheat = await user.calculateCheat();
-
-    let luckNow = Utils.getRandomInt(1,100);
-    console.log(userId+ "의 현재운/속임수성공 확률 : " + luckNow  + "/" + userCheat);
-    
-    if(luckNow < userCheat){
-        console.log(userId + "은 속임수에 성공했다!");
-        
-        var dealerCard = await getDealerPastCard(gambleId, "0");
-        await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.Cheat, "");
-        return dealerCard.toString();
+    var statusCode = await ServerAPI.updateCheatCount(userId, gambleId);
+    if(statusCode != 204){
+        return;
     }
-    
-    console.log(userId + "은 속임수에 실패했다.");
-    return "";
+
+    var cheatCard = await getCheatCard(gambleId, userId);
+    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind,ESP, userId, Enum.ESPActivity.Cheat, cheatCard);
+    return cheatCard;
 }
 
-module.exports.lucky = async function(gambleId, userId){
-    let serverUser1=  await ServerAPI.getUser(userId);
-    var user =  await User.convertToUser(serverUser1);
-    var userLuck = await user.calculateLucky();
-
-    let luckNow = Utils.getRandomInt(1,100);
-    console.log(userId+ "의 현재운/운좋을 확률 : " + luckNow  + "/" + userLuck);
-    
-    if(luckNow < userLuck){
-        console.log(userId + "은 운이 좋았다!");
-        var dealerCard = await getDealerPastCard(gambleId, "0");
-        return await partDealerDice(dealerCard);
-    }
-    
-    console.log(userId + "은 운이 좋지 않았다.");
-    return "";
+module.exports.card = async function(gambleId, userId){
+    return await getLuckyCard(gambleId, userId);
 }
 
 module.exports.getWinner = async function(gambleId, user1, user2){

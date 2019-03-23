@@ -135,11 +135,13 @@ module.exports.doCheatDiceChinchiro = async function(userId, gambleId){
     }
     var dice = await getCheatDice(userId);
     await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.Cheat, JSON.stringify(dice));
+    return dice;
 }
 
 module.exports.doDiceChinchiro = async function (userId, gambleId){
     var dice = await getRandomDice(userId);
     await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll, JSON.stringify(dice));
+    return dice;
 }
 
 module.exports.getWinner = async function (gambleId, user1, user2){

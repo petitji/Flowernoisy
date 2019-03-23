@@ -4,3 +4,4 @@ module.exports.ESPActivity = Object.freeze({"Start":1, "Win":2, "Lose":3, "End":
 module.exports.MinusOneActivity = Object.freeze({"Start":1, "Win":2, "Lose":3, "End":4, "Cheat" : 5, "BetChip" : 6, "GivePlayerCard" : 7, "SetPlayerCard" : 8});
 module.exports.BuildTenActivity = Object.freeze({"Start":1, "Win":2, "Lose":3, "End":4, "Cheat" : 5, "BetChip" : 6, "GivePlayerCard" : 7, "SetPlayerCard" : 8});
 module.exports.IndianPokerActivity = Object.freeze({"Start":1, "Win":2, "Lose":3, "End":4, "Cheat" : 5, "BetChip" : 6, "GivePlayerCard" : 7, "WinStage" : 8, "LoseStage" : 9, "FirstStageBet" : 10, "SecondStageBet":11, "ThirdStageBet":12 });
+module.exports.MinusOneCard = Object.freeze({"Rock": "바위", "Scissor":"가위", "Paper":"보"})
