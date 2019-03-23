@@ -116,7 +116,6 @@ async function convertToChinchiro (data){
     return new Dice(parsed.item1, parsed.item2, parsed.item3);
 }
 
-
 async function getPastDice (gambleId, userId){
     let dice = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll);
     return await convertToChinchiro(dice);
@@ -142,12 +141,6 @@ module.exports.cheat = async function(userId, gambleId){
         return;
     }
     return await isCheatSuccessful(userId, gambleId);
-}
-
-module.exports.doDiceChinchiro = async function (userId, gambleId){
-    var dice = await getRandomDice(userId, gambleId);
-    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll, JSON.stringify(dice));
-    return dice;
 }
 
 module.exports.rollDice = async function (userId, gambleId){
