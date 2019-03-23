@@ -186,28 +186,31 @@ module.exports.updateCheatCount = function(_userId, _gambleId){
         }
     };
 
-    request(options, function (error, response, body) {
-        if (error) throw new Error(error);
+    return new Promise(function(resolve, reject){
+        request(options, function (error, response, body) {
+            if (error) throw new reject(error);
 
-        //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
-        if(response.statusCode == 400){
-            const info = JSON.parse(body);
-            console.log(info);
-            return;
-        }
-        //심각한 일이 일어남;
-        if(response.statusCode == 500){
-            console.log(body);
-            return;
-        }
-        //정상 204 - no content
-        if(response.statusCode == 204){
-            console.log(body);
-            return;
-        }
+            //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
+            if(response.statusCode == 400){
+                const info = JSON.parse(body);
+                console.log(info);
+                return;
+            }
+            //심각한 일이 일어남;
+            if(response.statusCode == 500){
+                console.log(body);
+                return;
+            }
+            //정상 204 - no content
+            if(response.statusCode == 204){
+                console.log(body);
+                resolve(response.statusCode);
+                return;
+            }
 
-        //그 외 이상한 애들
-        console.log(body);
+            //그 외 이상한 애들
+            console.log(body);
+        });
     });
 }
 

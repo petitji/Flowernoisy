@@ -75,7 +75,7 @@ function CheatDice(){
     return new Dice(1,1,1);
 }
 
-async function getCheatDice(userId){
+async function getCheatDice(userId, gambleId){
     let serverUser1=  await ServerAPI.getUser(userId);
     var user =  await User.convertToUser(serverUser1);
     var userCheat = await user.calculateCheat();
@@ -85,14 +85,16 @@ async function getCheatDice(userId){
     
     if(luckNow < userCheat){
         console.log(userId + "은 속임수에 성공했다!");
+        await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.Cheat, 1);
         return CheatDice();
     }
     
     console.log(userId + "은 속임수에 실패했다.");
+    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.Cheat, 0);
     return NormalDice();
 }
    
-async function getRandomDice(userId){
+async function getRandomDice(userId, gambleId){
     let serverUser1=  await ServerAPI.getUser(userId);
     var user =  await User.convertToUser(serverUser1);
     var userLuck = await user.calculateLucky();
@@ -131,15 +133,16 @@ module.exports.betChinchiro = async function (gambleId, userId, chipCount){
 module.exports.doCheatDiceChinchiro = async function(userId, gambleId){
     var statusCode = await ServerAPI.updateCheatCount(userId, gambleId);
     if(statusCode != 204){
+        console.log("속임수 횟수가 없다.");
         return;
     }
-    var dice = await getCheatDice(userId);
-    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.Cheat, JSON.stringify(dice));
+    var dice = await getCheatDice(userId, gambleId);
+    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll, JSON.stringify(dice));
     return dice;
 }
 
 module.exports.doDiceChinchiro = async function (userId, gambleId){
-    var dice = await getRandomDice(userId);
+    var dice = await getRandomDice(userId, gambleId);
     await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll, JSON.stringify(dice));
     return dice;
 }

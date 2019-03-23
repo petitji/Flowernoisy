@@ -27,7 +27,7 @@ async function getDealerPastCard(gambleId, userId){
     return Utils.toArray(card);
 }
 
-async function partDealerDice(dealerCard){
+function partDealerDice(dealerCard){
     let random = digitArray.sort(() => .5 - Math.random()).slice(0,3);
     let randomNumber1 = random[0];
     let randomNumber2 = random[1];
@@ -53,12 +53,14 @@ async function getCheatCard(gambleId, userId){
         console.log(userId + "은 속임수에 성공했다!");
         
         var dealerCard = await getDealerPastCard(gambleId, "0");
-        await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.Cheat, "");
+        await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.Cheat, 1);
+        await ServerAPI.createGambleLog(gambleId, Enum.GambleKind,ESP, userId, Enum.ESPActivity.ShowHint, dealerCard.toString());
         return dealerCard.toString();
     }
     
     console.log(userId + "은 속임수에 실패했다.");
-    return Utils.shuffle(cardArray).toString();
+    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.Cheat, 0);
+    return "";
 }
 
 async function getLuckyCard(gambleId, userId){
@@ -72,11 +74,13 @@ async function getLuckyCard(gambleId, userId){
     if(luckNow < userLuck){
         console.log(userId + "은 운이 좋았다!");
         var dealerCard = await getDealerPastCard(gambleId, "0");
-        return await partDealerDice(dealerCard);
+        var hint = partDealerDice(dealerCard);
+        await ServerAPI.createGambleLog(gambleId, Enum.GambleKind,ESP, userId, Enum.ESPActivity.ShowHint, hint);
+        return hint;
     }
     
     console.log(userId + "은 운이 좋지 않았다.");
-    return Utils.shuffle(cardArray).toString();
+    return "";
 }
 
 module.exports.startESP = async function (user1Id, user2Id, isVoteGamble){
@@ -93,7 +97,7 @@ module.exports.betChip = async function(gambleId, userId, chipCount){
 }   
 
 module.exports.submitUserCard = async function(gambleId, userId, userCard){
-    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.PlayerCardSet, userCard);
+    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.SubmitPlayerCard, userCard);
 }
 
 module.exports.cheat = async function(gambleId, userId){
@@ -103,12 +107,12 @@ module.exports.cheat = async function(gambleId, userId){
     }
 
     var cheatCard = await getCheatCard(gambleId, userId);
-    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind,ESP, userId, Enum.ESPActivity.Cheat, cheatCard);
     return cheatCard;
 }
 
 module.exports.card = async function(gambleId, userId){
-    return await getLuckyCard(gambleId, userId);
+    var card = await getLuckyCard(gambleId, userId);
+    return card;
 }
 
 module.exports.getWinner = async function(gambleId, user1, user2){
