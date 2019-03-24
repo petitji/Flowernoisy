@@ -8,7 +8,7 @@ const request = require('request');
 module.exports.createGamble = function(gambleKind, user1, user2, isVoteGamble){
     return new Promise(function(resolve, reject){
     request.post({
-        url:     'http://localhost/~jihyeonlim/flowernoisy/GambleApi/gamble',
+        url:     'http://flowernoisy.dothome.co.kr/GambleApi/gamble',
         form:    { "kind": gambleKind, "user1":user1, "user2":user2, "isVoteGamble":isVoteGamble }
         }, function(error, response, body){
             if (error){
@@ -46,7 +46,7 @@ module.exports.createGamble = function(gambleKind, user1, user2, isVoteGamble){
 //winner - 승리한 유저의 ID
 module.exports.updateGamble = function(_id, _kind, _winner){
     var options = { method: 'PUT',
-        url: 'http://localhost/~jihyeonlim/flowernoisy/GambleApi/gamble',
+        url: 'http://flowernoisy.dothome.co.kr/GambleApi/gamble',
         headers: 
         {
             'Content-Type': 'application/x-www-form-urlencoded' },
@@ -90,7 +90,7 @@ module.exports.updateGamble = function(_id, _kind, _winner){
 //chipCount - 교환하는 칩의 개수
 module.exports.updateChip = function(_from, _to, _chipCount){
     var options = { method: 'PUT',
-        url: 'http://localhost/~jihyeonlim/flowernoisy/ChipApi/chip',
+        url: 'http://flowernoisy.dothome.co.kr/ChipApi/chip',
         headers: 
         {
             'Content-Type': 'application/x-www-form-urlencoded' },
@@ -138,7 +138,7 @@ module.exports.updateChip = function(_from, _to, _chipCount){
 //value - 행위의 값 (친치로:주사위, ESP게임:카드 등)
 module.exports.createGambleLog = function(gambleId, kind, user, activityKind, value){
         request.post({
-        url:     'http://localhost/~jihyeonlim/flowernoisy/GambleApi/gambleLog',
+        url:     'http://flowernoisy.dothome.co.kr/GambleApi/gambleLog',
         form:    { "gambleId" : gambleId, "kind": kind, "user":user, "activityKind":activityKind, "value":value }
         }, function(error, response, body){
             if (error){
@@ -172,7 +172,7 @@ module.exports.createGambleLog = function(gambleId, kind, user, activityKind, va
 //userId - 가지고 오고자 하는 유저의 ID
 module.exports.getUser = async function(userId){
     return new Promise(function(resolve, reject){
-        request('http://localhost/~jihyeonlim/flowernoisy/UserApi/user?userId=' + userId, function(error, response, body) {  
+        request('http://flowernoisy.dothome.co.kr/UserApi/user?userId=' + userId, function(error, response, body) {  
             if(error){
                 console.error(error);
                 return reject(error);
@@ -190,7 +190,7 @@ module.exports.getUser = async function(userId){
 //gambleId - 속임수 성공한 갬블의 Id
 module.exports.updateCheatCount = function(_userId, _gambleId){
     var options = { method: 'PUT',
-        url: 'http://localhost/~jihyeonlim/flowernoisy/UserApi/user',
+        url: 'http://flowernoisy.dothome.co.kr/UserApi/user',
         headers: 
         {
             'Content-Type': 'application/x-www-form-urlencoded' },
@@ -233,7 +233,7 @@ module.exports.updateCheatCount = function(_userId, _gambleId){
 
 module.exports.getGambleLog = async function(gambleId, gambleKind, userId, activityKind){
     return new Promise(function(resolve, reject){
-        request('http://localhost/~jihyeonlim/flowernoisy/GambleApi/gambleLog?gambleId=' + gambleId + '&gambleKind=' + gambleKind + '&userId=' + userId + "&activityKind=" + activityKind,
+        request('http://flowernoisy.dothome.co.kr/GambleApi/gambleLog?gambleId=' + gambleId + '&gambleKind=' + gambleKind + '&userId=' + userId + "&activityKind=" + activityKind,
         function(error, response, body) {  
             if(error){
                 console.error(error);
