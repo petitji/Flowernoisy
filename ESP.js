@@ -115,6 +115,10 @@ module.exports.card = async function(gambleId, userId){
     return card;
 }
 
+module.exports.dealerCard = async function (gambleId){
+    return await getDealerPastCard(gambleId, "0").toString();
+}
+
 module.exports.getWinner = async function(gambleId, user1, user2){
     var dealerCard = await getDealerPastCard(gambleId, "0");
     var card1 = await getPastCard(gambleId, user1);
