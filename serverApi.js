@@ -11,7 +11,10 @@ module.exports.createGamble = function(gambleKind, user1, user2, isVoteGamble){
         url:     'http://localhost/~jihyeonlim/flowernoisy/GambleApi/gamble',
         form:    { "kind": gambleKind, "user1":user1, "user2":user2, "isVoteGamble":isVoteGamble }
         }, function(error, response, body){
-            if (error) throw reject(error);
+            if (error){
+                console.error(error);
+                throw reject(error);
+            }
     
             //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
             if(response.statusCode == 400){
@@ -54,7 +57,10 @@ module.exports.updateGamble = function(_id, _kind, _winner){
              } };
 
     request(options, function (error, response, body) {
-        if (error) throw new Error(error);
+        if (error){
+            console.error(error);
+            throw new Error(error);
+        }
 
         //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
         if(response.statusCode == 400){
@@ -96,7 +102,11 @@ module.exports.updateChip = function(_from, _to, _chipCount){
     };
 
     request(options, function (error, response, body) {
-        if (error) throw new Error(error);
+        if (error)
+        {
+            console.error(error);
+            throw new Error(error);
+        }
 
         //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
         if(response.statusCode == 400){
@@ -131,7 +141,10 @@ module.exports.createGambleLog = function(gambleId, kind, user, activityKind, va
         url:     'http://localhost/~jihyeonlim/flowernoisy/GambleApi/gambleLog',
         form:    { "gambleId" : gambleId, "kind": kind, "user":user, "activityKind":activityKind, "value":value }
         }, function(error, response, body){
-            if (error) throw new Error(error);
+            if (error){
+                console.error(error);
+                throw new Error(error);
+            }
 
             //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
             if(response.statusCode == 400){
@@ -160,7 +173,10 @@ module.exports.createGambleLog = function(gambleId, kind, user, activityKind, va
 module.exports.getUser = async function(userId){
     return new Promise(function(resolve, reject){
         request('http://localhost/~jihyeonlim/flowernoisy/UserApi/user?userId=' + userId, function(error, response, body) {  
-            if(error) return reject(error);
+            if(error){
+                console.error(error);
+                return reject(error);
+            }
             try{
                 resolve(JSON.parse(body));
             }catch(e){
@@ -186,7 +202,10 @@ module.exports.updateCheatCount = function(_userId, _gambleId){
 
     return new Promise(function(resolve, reject){
         request(options, function (error, response, body) {
-            if (error) throw reject(error);
+            if (error){
+                console.error(error);
+                throw reject(error);
+            }
 
             //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
             if(response.statusCode == 400){
@@ -216,7 +235,10 @@ module.exports.getGambleLog = async function(gambleId, gambleKind, userId, activ
     return new Promise(function(resolve, reject){
         request('http://localhost/~jihyeonlim/flowernoisy/GambleApi/gambleLog?gambleId=' + gambleId + '&gambleKind=' + gambleKind + '&userId=' + userId + "&activityKind=" + activityKind,
         function(error, response, body) {  
-            if(error) return reject(error);
+            if(error){
+                console.error(error);
+                return reject(error);
+            }
             try{
                 if(response.statusCode==404){
                     return resolve(false);   
