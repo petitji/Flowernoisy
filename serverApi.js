@@ -1,6 +1,4 @@
 const request = require('request');
-const Enum = require('./Enum.js');
-const User = require('./user.js');
 
 //갬블을 생성합니다. 
 //gambleKind - 갬블의 종류
@@ -188,7 +186,7 @@ module.exports.updateCheatCount = function(_userId, _gambleId){
 
     return new Promise(function(resolve, reject){
         request(options, function (error, response, body) {
-            if (error) throw new reject(error);
+            if (error) throw reject(error);
 
             //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
             if(response.statusCode == 400){
