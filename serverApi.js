@@ -13,7 +13,7 @@ module.exports.createGamble = function(gambleKind, user1, user2, isVoteGamble){
         url:     'http://localhost/~jihyeonlim/flowernoisy/GambleApi/gamble',
         form:    { "kind": gambleKind, "user1":user1, "user2":user2, "isVoteGamble":isVoteGamble }
         }, function(error, response, body){
-            if (error) throw new reject(error);
+            if (error) throw reject(error);
     
             //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
             if(response.statusCode == 400){
