@@ -30,17 +30,22 @@ async function chinchiroMain(){
     //await ChinchiroDice.finishChinchiro(20, winner);
 
     //var gamble = await ESP.startESP(user1Id, user2Id, isVoteGamble);
-    //await ESP.setDealerCard(21);
-    //await ESP.betChip(21, user1Id, 3);
-    //await ESP.betChip(21, user2Id, 5);
-    //var dealerCard = await ESP.cheat(25, user1Id);
-    //var luckyCard =  await ESP.card(25, user1Id);
-    // await ESP.submitUserCard(21, user1Id, "B,A,C,D,E");
-    // await ESP.submitUserCard(21, user2Id, "C,B,A,E,D");
-    //var winner = await ESP.getWinner(21, user1Id, user2Id);
+    //await ESP.setDealerCard(34);
+    //await ESP.betChip(34, user1Id, 3);
+    //await ESP.betChip(34, user2Id, 5);
+    //await ESP.betChip(34, user1Id, 2);
+    //await ESP.cheat(34, user1Id);
+    //var card =  await ESP.card(34, user1Id);
+    //console.log(card);
+    //var card2 =  await ESP.card(34, user2Id);
+    //console.log(card2);
+    //await ESP.submitUserCard(34, user1Id, "B,A,C,D,E");
+    //await ESP.submitUserCard(34, user2Id, "C,B,A,E,D");
+    //var winner = await ESP.getWinner(34, user1Id, user2Id);
     // if(winner == 0) console.log("다시");
-    //await ESP.dealerCard(21); 
-    //await ESP.finishESP(21, user1Id);
+    //var dealerCard = await ESP.dealerCard(34); 
+    //console.log(dealerCard);
+    //await ESP.finishESP(34, user1Id);
 
     //var gamble = await MinusOne.startMinusOne(user1Id, user2Id, isVoteGamble); 
     //await MinusOne.cheat(27, user1Id);
