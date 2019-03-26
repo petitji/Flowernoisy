@@ -70,6 +70,14 @@ async function checkIfCheated(userId, gambleId){
     return isCheatSuccessful == 1;
 }
 
+async function checkIfCheatedAndDraw (userId, gambleId){
+    let isCheatSuccessful = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.MinusOne, userId, Enum.MinusOneActivity.Cheat);
+    let hasRollLog = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.MinusOne, userId, Enum.MinusOneActivity.SetPlayerCard); //값이 없을 경우 false 리턴
+
+    return isCheatSuccessful == 1 && hasRollLog !== false;
+}
+
+
 async function isCheatSuccessful(userId, gambleId){
     let serverUser1=  await ServerAPI.getUser(userId);
     var user =  await User.convertToUser(serverUser1);

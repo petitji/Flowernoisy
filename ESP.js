@@ -46,6 +46,13 @@ async function checkIfCheated(userId, gambleId){
     return isCheatSuccessful == 1;
 }
 
+async function checkIfCheatedAndDraw (userId, gambleId){
+    let isCheatSuccessful = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.Cheat);
+    let hasRollLog = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.SubmitPlayerCard); //값이 없을 경우 false 리턴
+
+    return isCheatSuccessful == 1 && hasRollLog !== false;
+}
+
 async function getCheatCard(gambleId, userId){
     let serverUser1=  await ServerAPI.getUser(userId);
     var user =  await User.convertToUser(serverUser1);
@@ -112,9 +119,11 @@ module.exports.cheat = async function(gambleId, userId){
 }
 
 module.exports.card = async function(gambleId, userId){
-    //속임수에 성공한 경우
-    var isCheatSuccessful = await checkIfCheated(gambleId, userId);
-    if(isCheatSuccessful){
+    let cheatAndDrawBefore = await checkIfCheatedAndDraw(userId, gambleId);
+    var isCheatSuccessful = await checkIfCheated(userId, gambleId);
+
+    //이번이 첫 속임수 성공이라면
+    if(isCheatSuccessful && !cheatAndDrawBefore){
         var dealerCard = await getDealerPastCard(gambleId);
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.ESP, userId, Enum.ESPActivity.ShowHint, dealerCard.toString());
         return dealerCard.toString();

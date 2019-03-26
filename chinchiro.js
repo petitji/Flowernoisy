@@ -126,6 +126,13 @@ async function checkIfCheated(userId, gambleId){
     return isCheatSuccessful == 1;
 }
 
+async function checkIfCheatedAndDraw (userId, gambleId){
+    let isCheatSuccessful = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.Cheat);
+    let hasRollLog = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll); //값이 없을 경우 false 리턴
+
+    return isCheatSuccessful == 1 && hasRollLog !== false;
+}
+
 module.exports.startChinchiro = async function (user1Id, user2Id, isVoteGamble){
     return await ServerAPI.createGamble(Enum.GambleKind.Chinchiro, user1Id, user2Id, isVoteGamble);
 }
@@ -145,9 +152,10 @@ module.exports.cheat = async function(userId, gambleId){
 
 module.exports.rollDice = async function (userId, gambleId){
     var isCheated  = await checkIfCheated(userId, gambleId);
-
-    //속임수가 있으면 속임수를 리턴
-    if(isCheated){
+    let cheatAndDrawBefore = await checkIfCheatedAndDraw(userId, gambleId);
+    
+    //이번이 첫 속임수라면
+    if(isCheated && !cheatAndDrawBefore){
         var dice = CheatDice();
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.Chinchiro, userId, Enum.ChinchiroActivity.DiceRoll, JSON.stringify(dice));
         return dice;
