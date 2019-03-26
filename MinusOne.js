@@ -125,7 +125,7 @@ async function getCards(user1Id, user2Id){
 
 async function getPastCard(gambleId, userId){
     let cards = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.MinusOne, userId, Enum.MinusOneActivity.GivePlayerCard);
-    return Utils.toArray(cards);
+    return Utils.toArray(cards.toString());
 }
 
 function removeCard(pastCards, card){
