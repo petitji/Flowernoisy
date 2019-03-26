@@ -47,6 +47,13 @@ async function chinchiroMain(){
     //var winner = await ESP.getWinner(68, user1Id, user2Id);
     // if(winner == 0) console.log("다시");
     //var dealerCard = await ESP.dealerCard(34); 
+
+    //>>>>> 유저가 제출했던 카드 보여주기<<<<<<
+    // var user1Card = await ESP.getSubmitCard(68, user1Id);
+    // console.log(user1Card);
+    // var user2Card = await ESP.getSubmitCard(68, user2Id);
+    // console.log(user2Card);
+
     //console.log(dealerCard);
     //await ESP.finishESP(34, user1Id);
 
@@ -61,6 +68,13 @@ async function chinchiroMain(){
     //console.log(left);
     //await MinusOne.submit(69, user1Id, "바위");
     //await MinusOne.submit(69, user2Id, "바위");
+
+    //>>>>> 유저에게 남은 카드 보여주기<<<<<<
+    // var user1Card = await MinusOne.getLeftCard(69, user1Id);
+    // console.log(user1Card);
+    // var user2Card = await MinusOne.getLeftCard(69, user2Id);
+    // console.log(user2Card);
+    
     //var winner = await MinusOne.getWinner(69, user1Id, user2Id);
     //console.log(winner);
     //if(winner ==0) 다시 진행

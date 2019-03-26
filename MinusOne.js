@@ -221,6 +221,11 @@ module.exports.getWinner = async function (gambleId, user1, user2){
     }
 }
 
+module.exports.getLeftCard = async function (gambleId, userId){
+    var userCard = await getLeftCard(gambleId, userId);
+    return userCard;
+}
+
 module.exports.finishMinusOne = async function (gambleId, winnerId){
     await ServerAPI.updateGamble(gambleId, Enum.GambleKind.MinusOne, winnerId);
 }
