@@ -136,7 +136,7 @@ function removeCard(pastCards, card){
 
 async function getLeftCard(gambleId, userId){
     let leftCard = await ServerAPI.getGambleLog(gambleId, Enum.GambleKind.MinusOne, userId, Enum.MinusOneActivity.SetPlayerCard);
-    return leftCard.trim();
+    return leftCard.toString().trim();
 }
 
 module.exports.startMinusOne = async function (user1Id, user2Id, isVoteGamble){

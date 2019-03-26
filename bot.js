@@ -53,10 +53,11 @@ async function chinchiroMain(){
     //await MinusOne.betChip(27, user1Id, 3);
     //await MinusOne.betChip(27, user2Id, 5);
     var cards = await MinusOne.cards(42, user1Id, user2Id);
-    console.log(cards);
-    //console.log(cards.user1.toString())
+    //console.log(cards);
+    console.log(cards.user1.item2);
     //console.log(cards.user2.toString());
-    //await MinusOne.submit(27, user1Id, "보");
+    var left = await MinusOne.submit(42, user1Id, cards.user1.item2);
+    console.log(left);
     //await MinusOne.submit(27, user2Id, "보");
     //var winner = await MinusOne.getWinner(27, user1Id, user2Id);
     //if(winner ==0) 다시 진행
