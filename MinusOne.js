@@ -140,11 +140,11 @@ async function getLeftCard(gambleId, userId){
 }
 
 module.exports.startMinusOne = async function (user1Id, user2Id, isVoteGamble){
-    await ServerAPI.createGamble(Enum.GambleKind.MinusOne, user1Id, user2Id, isVoteGamble);
+    return await ServerAPI.createGamble(Enum.GambleKind.MinusOne, user1Id, user2Id, isVoteGamble);
 }
 
 module.exports.betChip = async function(gambleId, userId, chipCount){
-    await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, userId, Enum.MinusOneActivity.BetChip, chipCount);
+    return await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, userId, Enum.MinusOneActivity.BetChip, chipCount);
 }   
 
 module.exports.cheat = async function(gambleId, userId){

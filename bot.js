@@ -52,7 +52,8 @@ async function chinchiroMain(){
     //await MinusOne.cheat(27, user2Id);
     //await MinusOne.betChip(27, user1Id, 3);
     //await MinusOne.betChip(27, user2Id, 5);
-    //var cards = await MinusOne.cards(27, user1Id, user2Id);
+    var cards = await MinusOne.cards(42, user1Id, user2Id);
+    console.log(cards);
     //console.log(cards.user1.toString())
     //console.log(cards.user2.toString());
     //await MinusOne.submit(27, user1Id, "보");
