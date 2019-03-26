@@ -51,18 +51,18 @@ async function chinchiroMain(){
     //await ESP.finishESP(34, user1Id);
 
     //var gamble = await MinusOne.startMinusOne(user1Id, user2Id, isVoteGamble); 
-    //await MinusOne.cheat(27, user1Id);
-    //await MinusOne.cheat(27, user2Id);
+    //await MinusOne.cheat(69, user1Id);
+    //await MinusOne.cheat(69, user2Id);
     //await MinusOne.betChip(27, user1Id, 3);
     //await MinusOne.betChip(27, user2Id, 5);
-    //var cards = await MinusOne.cards(42, user1Id, user2Id);
+    //var cards = await MinusOne.cards(69, user1Id, user2Id);
     //console.log(cards);
-    //console.log(cards.user1.item2);
-    //console.log(cards.user2.toString());
     //var left = await MinusOne.submit(42, user1Id, cards.user1.item2);
     //console.log(left);
-    //await MinusOne.submit(27, user2Id, "보");
-    //var winner = await MinusOne.getWinner(27, user1Id, user2Id);
+    //await MinusOne.submit(69, user1Id, "바위");
+    //await MinusOne.submit(69, user2Id, "바위");
+    //var winner = await MinusOne.getWinner(69, user1Id, user2Id);
+    //console.log(winner);
     //if(winner ==0) 다시 진행
     //await MinusOne.finishMinusOne(27, user1Id);
 

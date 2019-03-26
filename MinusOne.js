@@ -77,7 +77,6 @@ async function checkIfCheatedAndDraw (userId, gambleId){
     return isCheatSuccessful == 1 && hasRollLog !== false;
 }
 
-
 async function isCheatSuccessful(userId, gambleId){
     let serverUser1=  await ServerAPI.getUser(userId);
     var user =  await User.convertToUser(serverUser1);
@@ -166,22 +165,24 @@ module.exports.cheat = async function(gambleId, userId){
 
 module.exports.cards = async function(gambleId, user1, user2){
     var isUser1Cheated  = await checkIfCheated(user1, gambleId);
+    var user1CheatBeforeDraw = await checkIfCheatedAndDraw(user1, gambleId);
     var isUser2Cheated  = await checkIfCheated(user2, gambleId);
+    var user2CheatBeforeDraw = await checkIfCheatedAndDraw(user2, gambleId);
 
     //둘 다 속임수를 쓴 경우
-    if(isUser1Cheated && isUser2Cheated){
+    if(isUser1Cheated && isUser2Cheated && !user1CheatBeforeDraw && !user2CheatBeforeDraw){
         var cards = createSameCardSet();
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, user1, Enum.MinusOneActivity.GivePlayerCard, cards.user1.toString());
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, user2, Enum.MinusOneActivity.GivePlayerCard, cards.user2.toString());
         return cards;
     }
     //속임수가 있으면 속임수를 리턴
-    else if(isUser1Cheated){
+    else if(isUser1Cheated && !user1CheatBeforeDraw){
         var cards = CheatCards();
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, user1, Enum.MinusOneActivity.GivePlayerCard, cards.user1.toString());
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, user2, Enum.MinusOneActivity.GivePlayerCard, cards.user2.toString());
         return cards;
-    }else if(isUser2Cheated){
+    }else if(isUser2Cheated && !user2CheatBeforeDraw){
         var cards = CheatCards();
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, user1, Enum.MinusOneActivity.GivePlayerCard, cards.user2.toString());
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, user2, Enum.MinusOneActivity.GivePlayerCard, cards.user1.toString());
