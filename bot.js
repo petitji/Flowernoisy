@@ -58,11 +58,11 @@ async function chinchiroMain(){
     //await ESP.finishESP(34, user1Id);
 
     //var gamble = await MinusOne.startMinusOne(user1Id, user2Id, isVoteGamble); 
-    //await MinusOne.cheat(69, user1Id);
-    //await MinusOne.cheat(69, user2Id);
+    //await MinusOne.cheat(, user1Id);
+    //await MinusOne.cheat(105, user2Id);
     //await MinusOne.betChip(27, user1Id, 3);
     //await MinusOne.betChip(27, user2Id, 5);
-    //var cards = await MinusOne.cards(69, user1Id, user2Id);
+    //var cards = await MinusOne.cards(105, user1Id, user2Id);
     //console.log(cards);
     //var left = await MinusOne.submit(42, user1Id, cards.user1.item2);
     //console.log(left);

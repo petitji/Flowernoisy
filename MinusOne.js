@@ -186,7 +186,8 @@ module.exports.cards = async function(gambleId, user1, user2){
         var cards = CheatCards();
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, user1, Enum.MinusOneActivity.GivePlayerCard, cards.user2.toString());
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, user2, Enum.MinusOneActivity.GivePlayerCard, cards.user1.toString());
-        return cards;
+        let swapCard = new CardSet(cards.user2, cards.user1); 
+        return swapCard;
     }else{
         var cards = await getCards(user1, user2);
         await ServerAPI.createGambleLog(gambleId, Enum.GambleKind.MinusOne, user1, Enum.MinusOneActivity.GivePlayerCard, cards.user1.toString());
