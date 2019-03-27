@@ -2,6 +2,7 @@
 var ChinchiroDice = require('./chinchiro.js');
 var ESP = require('./ESP.js');
 var MinusOne = require('./MinusOne.js');
+var User = require('./User.js');
 
 //모든 boolean 값들은 1을 true로 합니다.
 //is 등으로 시작하는 변수들
@@ -20,8 +21,8 @@ async function chinchiroMain(){
     // await ChinchiroDice.betChinchiro(20, user2Id, 5);
     //await ChinchiroDice.cheat(user1Id, 67);
     //await ChinchiroDice.cheat(user2Id, 67);
-    //var dice = await ChinchiroDice.rollDice(user1Id, 67);
-    //var dice = await ChinchiroDice.rollDice(user2Id, 67);
+    // var dice = await ChinchiroDice.rollDice(user1Id, 135);
+    // var dice = await ChinchiroDice.rollDice(user2Id, 135);
     //var test = await ChinchiroDice.checkIfCheatedAndDraw(user1Id, 22);
     //console.log(test);
     // var winner = await ChinchiroDice.getWinner(20, user1Id, user2Id);
@@ -36,8 +37,8 @@ async function chinchiroMain(){
     //await ESP.betChip(34, user1Id, 3);
     //await ESP.betChip(34, user2Id, 5);
     //await ESP.betChip(34, user1Id, 2);
-    //await ESP.cheat(68, user1Id);
-    //await ESP.cheat(68, user2Id);
+    //await ESP.cheat(133, user1Id);
+    //await ESP.cheat(133, user2Id);
     //var card =  await ESP.card(68, user1Id);
     //console.log(card);
     //var card2 =  await ESP.card(68, user2Id);
@@ -58,11 +59,11 @@ async function chinchiroMain(){
     //await ESP.finishESP(34, user1Id);
 
     //var gamble = await MinusOne.startMinusOne(user1Id, user2Id, isVoteGamble); 
-    //await MinusOne.cheat(, user1Id);
-    //await MinusOne.cheat(105, user2Id);
+    //await MinusOne.cheat(134, user1Id);
+    //await MinusOne.cheat(134, user2Id);
     //await MinusOne.betChip(27, user1Id, 3);
     //await MinusOne.betChip(27, user2Id, 5);
-    //var cards = await MinusOne.cards(105, user1Id, user2Id);
+    //var cards = await MinusOne.cards(134, user1Id, user2Id);
     //console.log(cards);
     //var left = await MinusOne.submit(42, user1Id, cards.user1.item2);
     //console.log(left);
@@ -80,6 +81,11 @@ async function chinchiroMain(){
     //if(winner ==0) 다시 진행
     //await MinusOne.finishMinusOne(27, user1Id);
 
+    // var yoo = new User("you", "아오야기 유", 40, 1, 40, 19);
+    // yoo.calculateCheat();
+    
+    // var misa = new User("misa", "카토 미사", 30, 40, 10, 20);
+    // misa.calculateLucky();
 }
 
 

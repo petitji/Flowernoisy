@@ -11,13 +11,17 @@ class User{
     }
 
     async calculateCheat(){
-        var randomNumber = Utils.getRandomInt(1,7);
-        return (this.acting/50) * (this.intelligence/100) * (1/randomNumber) * 100;
+        var randomNumber = Utils.getRandomInt(1,2);
+        let test = (this.acting/50) * (this.intelligence/100) * (1/randomNumber) * 200;
+        // console.log(test);
+        return test;
     }
     
     async calculateLucky(){
-        var randomNumber = Utils.getRandomInt(1,7);
-        return (this.luck/50) * (this.intelligence/100) * (1/randomNumber) * 100;
+        var randomNumber = Utils.getRandomInt(1,3);
+        let test= (this.luck/50) * (this.intelligence/100) * (1/randomNumber) * 200;
+        // console.log(test);
+        return test;
     }
 }
 
