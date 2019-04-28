@@ -3,6 +3,7 @@ var ChinchiroDice = require('./chinchiro.js');
 var ESP = require('./ESP.js');
 var MinusOne = require('./MinusOne.js');
 var User = require('./User.js');
+var ServerApi = require('./serverApi');
 
 //모든 boolean 값들은 1을 true로 합니다.
 //is 등으로 시작하는 변수들
@@ -15,6 +16,10 @@ async function chinchiroMain(){
     var user1Id = "developer";
     var user2Id = "tester";
     var isVoteGamble = 0;
+
+
+    await ServerApi.decrementChip(user1Id);
+
 
     //var gamble =await ChinchiroDice.startChinchiro(user1Id, user2Id, isVoteGamble);
      //await ChinchiroDice.betChinchiro(20, user1Id, 3);

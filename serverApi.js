@@ -249,3 +249,45 @@ module.exports.getGambleLog = async function(gambleId, gambleKind, userId, activ
         });
     });
 }
+
+module.exports.decrementChip = async function(_userId){
+    var options = { method: 'PUT',
+        url: 'http://flowernoisy.dothome.co.kr/UserApi/chip',
+        headers: 
+        {
+            'Content-Type': 'application/x-www-form-urlencoded' },
+        form: 
+        {   userId: _userId
+        }
+    };
+
+    return new Promise(function(resolve, reject){
+        request(options, function (error, response, body) {
+            if (error){
+                console.error(error);
+                throw reject(error);
+            }
+
+            //Bad Request (유저가 없거나 적절하지 못한 값일 경우)
+            if(response.statusCode == 400){
+                const info = JSON.parse(body);
+                console.log(info);
+                return;
+            }
+            //심각한 일이 일어남;
+            if(response.statusCode == 500){
+                console.log(body);
+                return;
+            }
+            //정상 204 - no content
+            if(response.statusCode == 204){
+                console.log(body);
+                resolve(response.statusCode);
+                return;
+            }
+
+            //그 외 이상한 애들
+            console.log(body);
+        });
+    });
+}
